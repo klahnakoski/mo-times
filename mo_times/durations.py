@@ -17,7 +17,7 @@ import re
 
 from mo_times.vendor.dateutil.relativedelta import relativedelta
 
-from pyDots import wrap
+from mo_dots import wrap
 from mo_math import MIN, Math
 
 _Date = None
@@ -135,7 +135,7 @@ class Duration(object):
                 if r >= MILLI_VALUES.day * 31:
                     from mo_logs import Log
                     Log.error("Do not know how to handle")
-            r = MIN(29 / 30, (r + tod) / (MILLI_VALUES.day * 30))
+            r = MIN([29 / 30, (r + tod) / (MILLI_VALUES.day * 30)])
 
             output = Math.floor(m / amount.month) + r
             return output
