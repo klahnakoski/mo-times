@@ -1,9 +1,9 @@
 
 
-`Date` class
+ `Date` class
 ============
 
-A simplified date and time class for time manipulation. This library is intended for personal and business applications where assuming every solar day has 24 * 60 * 60 seconds is considered accurate. [See *GMT vs UTC* below](#GMT%20vs%20UTC).
+A simplified date and time class for time manipulation. This library is intended for personal and business applications where assuming every solar day has 24 * 60 * 60 seconds is considered accurate. [See *GMT vs UTC* below](//#GMT%20vs%20UTC).
 
 
 Assumptions
@@ -102,7 +102,7 @@ Return a string representing `self` using given `interval` and `decimal` roundin
 Time Vector Space
 =================
 
-The `Date` and `Duration` objects are the point and vectors in a one dimensional vector space respectively.  As such, the `+` and `-` operators are allowed. Comparisons with (`>`, `>=', `<=`, `<`) are also supported.
+The `Date` and `Duration` objects are the point and vectors in a one dimensional vector space. As such, the `+` and `-` operators are allowed. Comparisons with (`>`, `>=`, `<=`, `<`) are also supported.
 
 
 GMT vs UTC
