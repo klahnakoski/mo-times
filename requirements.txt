@@ -1,3 +1,4 @@
+mo-future>=1.5
 mo-dots
 mo-logs
 mo-math

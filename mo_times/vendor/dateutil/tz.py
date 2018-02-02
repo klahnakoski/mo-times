@@ -4,23 +4,22 @@ Copyright (c) 2003-2007  Gustavo Niemeyer <gustavo@niemeyer.net>
 This module offers extensions to the standard Python
 datetime module.
 """
-__license__ = "Simplified BSD"
 
 import datetime
-import struct
-import time
-import sys
 import os
+import struct
+import sys
+import time
 
-string_types = basestring
-PY3 = sys.version_info[0] == 3
+from mo_future import PY3, string_types
+
+__license__ = "Simplified BSD"
+__all__ = ["tzutc", "tzoffset", "tzlocal", "tzfile", "tzrange",
+           "tzstr", "tzical", "tzwin", "tzwinlocal", "gettz"]
 
 relativedelta = None
 parser = None
 rrule = None
-
-__all__ = ["tzutc", "tzoffset", "tzlocal", "tzfile", "tzrange",
-           "tzstr", "tzical", "tzwin", "tzwinlocal", "gettz"]
 
 try:
     from dateutil.tzwin import tzwin, tzwinlocal
