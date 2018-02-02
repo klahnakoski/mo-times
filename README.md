@@ -12,7 +12,7 @@ A simplified date and time class for time manipulation. This library is intended
 * **Exclusive ceiling time ranges** - All time comparisons have been standardized to `min <= value < max`. The minimum is inclusive, and the maximum is excluded. (please word this better)
 
 
-#`Date` properties
+# `Date` properties
 
 ### `Date()` constructor
 

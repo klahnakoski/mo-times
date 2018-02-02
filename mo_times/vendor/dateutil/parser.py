@@ -5,32 +5,21 @@ Copyright (c) 2003-2007  Gustavo Niemeyer <gustavo@niemeyer.net>
 This module offers extensions to the standard Python
 datetime module.
 """
-from __future__ import unicode_literals
-from __future__ import division
 from __future__ import absolute_import
-__license__ = "Simplified BSD"
+from __future__ import division
+from __future__ import unicode_literals
 
-
+import collections
 import datetime
 import string
 import time
-import sys
-import os
-import collections
 
-try:
-    from io import StringIO
-except ImportError:
-    from io import StringIO
-
-integer_types = (int, long)
-text_type = unicode
-binary_type = str
+from mo_future import text_type, integer_types, binary_type, StringIO
 
 from . import relativedelta
 from . import tz
 
-
+__license__ = "Simplified BSD"
 __all__ = ["parse", "parserinfo"]
 
 
