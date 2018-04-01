@@ -9,7 +9,7 @@ A simplified date and time class for time manipulation. This library is intended
 
 * **All time is in GMT** - Timezone math is left to be resolved at the human endpoints: Machines should only be dealing with one type of time; without holes, without overlap, and with minimal context.
 * **Single time type** - There is no distinction between dates, datetime and times; all measurements in the time dimension are handled by one type called `Date`. This is important for treating time as a vector space.
-* **Exclusive ceiling time ranges** - All time comparisons have been standardized to `min <= value < max`. The minimum is inclusive, and the maximum is excluded. (please word this better)
+* **Standard range comparision** - All time range comparisons have been standardized to `min <= value < max`. The minimum is inclusive (`<=`), and the maximum is exclusive (`<`). 
 
 
 # `Date` properties
