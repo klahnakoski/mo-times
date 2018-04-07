@@ -44,7 +44,7 @@ def find_packages(where='.', lib_prefix='', exclude=()):
 
 setup(
     name='mo-times',
-    version="1.6.18033",
+    version="1.6.18097",
     description='More Time! Time as a vector space, the way it was meant to be.',
     long_description=long_desc,
     author='Kyle Lahnakoski',
