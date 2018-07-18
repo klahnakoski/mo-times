@@ -44,7 +44,7 @@ def find_packages(where='.', lib_prefix='', exclude=()):
 
 setup(
     name='mo-times',
-    version="1.6.18097",
+    version="2.16.18199",
     description='More Time! Time as a vector space, the way it was meant to be.',
     long_description=long_desc,
     author='Kyle Lahnakoski',
@@ -52,7 +52,7 @@ setup(
     url='https://github.com/klahnakoski/mo-times',
     license='MPL 2.0',
     packages=find_packages(".", lib_prefix=""),
-    install_requires=["mo-dots","mo-future>=1.5","mo-logs","mo-math"],
+    install_requires=["mo-dots>=2.7.18148","mo-future>=2.3.18147","mo-logs>=2.16.18199","mo-math>=2.16.18199"],
     include_package_data=True,
     zip_safe=False,
     classifiers=[  #https://pypi.python.org/pypi?%3Aaction=list_classifiers
