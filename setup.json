@@ -1,0 +1,16 @@
+{
+    "name": "mo-times",
+    "version": "2.18.18240",
+    "description": "More Time! Time as a vector space, the way it was meant to be.",
+    "author": "Kyle Lahnakoski",
+    "author_email": "kyle@lahnakoski.com",
+    "url": "https://github.com/klahnakoski/mo-times",
+    "license": "MPL 2.0",
+    "include_package_data": true,
+    "classifiers": [
+        "Development Status :: 4 - Beta",
+        "Topic :: Software Development :: Libraries",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)"
+    ]
+}
