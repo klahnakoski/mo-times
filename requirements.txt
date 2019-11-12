@@ -1,4 +1,4 @@
-mo-future>=1.5
-mo-dots
-mo-logs
-mo-math
+mo-future>=3
+mo-dots>3
+mo-logs>3
+mo-math>3

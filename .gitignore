@@ -1,3 +1,7 @@
 /build
 /dist
 /mo_times.egg-info
+.svn
+.idea
+*.iml
+vendor
