@@ -33,6 +33,7 @@ except Exception:
     pass
 
 ISO8601 = '%Y-%m-%dT%H:%M:%SZ'
+RFC1123 = '%a, %d %b %Y %H:%M:%S GMT'
 
 
 class Date(object):
@@ -442,6 +443,10 @@ def unicode2Date(value, format=None):
         "%d%b%y",
         "%d%B%Y",
         "%d%B%y",
+        "%B%d%Y",
+        "%b%d%Y",
+        "%B%d%",
+        "%b%d%y",
         "%Y%m%d%H%M%S",
         "%Y%m%dT%H%M%S",
         "%d%m%Y%H%M%S",
@@ -488,7 +493,11 @@ def datetime2unix(value):
 def unix2datetime(unix):
     if unix == None:
         return Null
-    return datetime.utcfromtimestamp(unix)
+    try:
+        return datetime.utcfromtimestamp(unix)
+    except Exception as e:
+        from mo_logs import Log
+        Log.error("Can not convert {{value}} to datetime", value=unix, cause=e)
 
 
 def unix2Date(unix):
