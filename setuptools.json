@@ -10,7 +10,7 @@
     "description": "More Time! Time as a vector space, the way it was meant to be.",
     "include_package_data": true,
     "install_requires": [
-          "mo-dots>=3.46.20032", "mo-future>=3.45.20031",   "mo-logs>=3.46.20032",
+          "mo-dots>=3.47.20042", "mo-future>=3.47.20042",   "mo-logs>=3.50.20043",
           "mo-math>=3.41.20031"
     ],
     "license": "MPL 2.0",
@@ -140,5 +140,5 @@
         "mo_times"
     ],
     "url": "https://github.com/klahnakoski/mo-times",
-    "version": "3.46.20032"
+    "version": "3.50.20043"
 }
