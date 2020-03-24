@@ -10,18 +10,19 @@
 
 from __future__ import absolute_import, division, unicode_literals
 
-from mo_future import is_text, is_binary
-from datetime import date, datetime, timedelta
-from decimal import Decimal
 import math
 import re
+from datetime import date, datetime, timedelta
+from decimal import Decimal
 from time import time as _time
 
+import mo_math
 from mo_dots import Null, NullType, coalesce
+from mo_future import is_text, PY3
 from mo_future import long, none_type, text, unichr
 from mo_logs import Except
 from mo_logs.strings import deformat
-import mo_math
+
 from mo_times.durations import Duration, MILLI_VALUES
 from mo_times.vendor.dateutil.parser import parse as parse_date
 
@@ -68,6 +69,16 @@ class Date(object):
 
     def __int__(self):
         return int(self.unix)
+
+    def ceiling(self, duration=Null):
+        if duration.month:
+            from mo_logs import Log
+
+            Log.error("do not know how to handle")
+
+        neg_self = _unix2Date(-self.unix)
+        neg_floor = neg_self.floor(duration)
+        return _unix2Date(-neg_floor.unix)
 
     def floor(self, duration=None):
         if duration is None:  # ASSUME DAY
@@ -486,7 +497,11 @@ def unicode2Date(value, format=None):
         Log.error("Can not interpret {{value}} as a datetime", value=value)
 
 
-DATETIME_EPOCH = datetime(1970, 1, 1)
+if PY3:
+    from datetime import timezone
+    DATETIME_EPOCH = datetime(1970, 1, 1, tzinfo=timezone.utc)
+else:
+    DATETIME_EPOCH = datetime(1970, 1, 1)
 DATE_EPOCH = date(1970, 1, 1)
 
 
@@ -495,7 +510,10 @@ def datetime2unix(value):
         if value == None:
             return None
         elif isinstance(value, datetime):
-            diff = value - DATETIME_EPOCH
+            if value.tzinfo:
+                diff = value - DATETIME_EPOCH
+            else:
+                diff = value - DATETIME_EPOCH.replace(tzinfo=None)
             return diff.total_seconds()
         elif isinstance(value, date):
             diff = value - DATE_EPOCH
@@ -546,9 +564,15 @@ def deformat(value):
     return "".join(output)
 
 
-Date.MIN = Date(datetime(1, 1, 1))
-Date.MAX = Date(datetime(2286, 11, 20, 17, 46, 39))
-Date.EPOCH = _unix2Date(0)
+if PY3:
+    from datetime import timezone
+    Date.MIN = Date(datetime(1, 1, 1, tzinfo=timezone.utc))
+    Date.MAX = Date(datetime(2286, 11, 20, 17, 46, 39, tzinfo=timezone.utc))
+    Date.EPOCH = _unix2Date(0)
+else:
+    Date.MIN = Date(datetime(1, 1, 1))
+    Date.MAX = Date(datetime(2286, 11, 20, 17, 46, 39))
+    Date.EPOCH = _unix2Date(0)
 
 def _mod(value, mod=1):
     """
