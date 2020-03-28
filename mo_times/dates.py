@@ -22,7 +22,6 @@ from mo_future import is_text, PY3
 from mo_future import long, none_type, text, unichr
 from mo_logs import Except
 from mo_logs.strings import deformat
-
 from mo_times.durations import Duration, MILLI_VALUES
 from mo_times.vendor.dateutil.parser import parse as parse_date
 
@@ -56,10 +55,19 @@ class Date(object):
     def __hash__(self):
         return self.unix.__hash__()
 
-    def __eq__(self, val):
-        if val is not None and type(val) == Date:
-            return self.unix == val.unix
-        return False
+    def __eq__(self, other):
+        try:
+            type_ = other.__class__
+            if type_ in (none_type, NullType):
+                return False
+            elif type_ is Date:
+                return self.unix == other.unix
+            elif type_ in (float, int):
+                return self.unix == other
+            other = Date(other)
+            return self.unix == other.unix
+        except Exception:
+            return False
 
     def __nonzero__(self):
         return True
@@ -90,7 +98,7 @@ class Date(object):
             month -= 12*year
             return Date(datetime(year, month+1, 1))
         elif duration.milli % (7 * 86400000) == 0:
-            offset = 4*86400
+            offset = 4 * 86400
             return _unix2Date(math.floor((self.unix + offset) / duration.seconds) * duration.seconds - offset)
         else:
             return _unix2Date(math.floor(self.unix / duration.seconds) * duration.seconds)
@@ -212,20 +220,6 @@ class Date(object):
                 return self.unix < other
             other = Date(other)
             return self.unix < other.unix
-        except Exception:
-            return False
-
-    def __eq__(self, other):
-        try:
-            type_ = other.__class__
-            if type_ in (none_type, NullType):
-                return False
-            elif type_ is Date:
-                return self.unix == other.unix
-            elif type_ in (float, int):
-                return self.unix == other
-            other = Date(other)
-            return self.unix == other.unix
         except Exception:
             return False
 
