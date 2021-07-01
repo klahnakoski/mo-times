@@ -15,5 +15,5 @@ setup(
     name='mo-times',
     packages=["mo_times/vendor/dateutil/zoneinfo","mo_times/vendor/dateutil","mo_times/vendor","mo_times"],
     url='https://github.com/klahnakoski/mo-times',
-    version='5.23.21182'
+    version='5.24.21182'
 )
