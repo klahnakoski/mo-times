@@ -14,9 +14,9 @@ from __future__ import unicode_literals
 
 from datetime import datetime
 
-from mo_future import PY3
 from mo_math import MAX
 from mo_testing.fuzzytestcase import FuzzyTestCase
+
 from mo_times.dates import Date
 from mo_times.durations import MONTH, YEAR, WEEK, Duration, DAY
 
@@ -72,12 +72,9 @@ class TestDate(FuzzyTestCase):
         self.assertEqual(date, expected)
 
     def test_create_date(self):
-        if PY3:
-            from datetime import timezone
-            test = Date(datetime(2020, 3, 21, 0, 0, 0, 0, timezone.utc))
-        else:
-            test = Date(datetime(2020, 3, 21, 0, 0, 0, 0))
-        self.assertEqual(test, 1584748800)
+        from datetime import timezone
+        test = Date(datetime(2020, 3, 21, 0, 0, 0, 0, timezone.utc))
+        self.assertEqual(float(test), 1584748800)
 
     def test_div(self):
         diff = Date.now()-(Date.now()-DAY)

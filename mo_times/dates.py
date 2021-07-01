@@ -17,9 +17,9 @@ from decimal import Decimal
 from time import time as unix_now
 
 import mo_math
-from mo_dots import Null, NullType, coalesce
+from mo_dots import Null, coalesce
 from mo_future import is_text, PY3
-from mo_future import long, none_type, text, unichr
+from mo_future import long, text, unichr
 from mo_logs import Except
 from mo_logs.strings import deformat
 from mo_times.durations import Duration, MILLI_VALUES
@@ -58,7 +58,7 @@ class Date(object):
     def __eq__(self, other):
         try:
             type_ = other.__class__
-            if type_ in (none_type, NullType):
+            if type_ in null_types:
                 return False
             elif type_ is Date:
                 return self.unix == other.unix
@@ -210,7 +210,7 @@ class Date(object):
     def __lt__(self, other):
         try:
             type_ = other.__class__
-            if type_ in (none_type, NullType):
+            if type_ in null_types:
                 return False
             elif type_ is Date:
                 return self.unix < other.unix
@@ -224,7 +224,7 @@ class Date(object):
     def __le__(self, other):
         try:
             type_ = other.__class__
-            if type_ in (none_type, NullType):
+            if type_ in null_types:
                 return False
             elif type_ is Date:
                 return self.unix <= other.unix
@@ -238,7 +238,7 @@ class Date(object):
     def __gt__(self, other):
         try:
             type_ = other.__class__
-            if type_ in (none_type, NullType):
+            if type_ in null_types:
                 return False
             elif type_ is Date:
                 return self.unix > other.unix
@@ -252,7 +252,7 @@ class Date(object):
     def __ge__(self, other):
         try:
             type_ = other.__class__
-            if type_ in (none_type, NullType):
+            if type_ in null_types:
                 return False
             elif type_ is Date:
                 return self.unix >= other.unix

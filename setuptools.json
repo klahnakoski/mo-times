@@ -3,6 +3,8 @@
     "author_email": "kyle@lahnakoski.com",
     "classifiers": [
         "Development Status :: 4 - Beta",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.9",
         "Topic :: Software Development :: Libraries",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)"
@@ -10,8 +12,8 @@
     "description": "More Time! Time as a vector space, the way it was meant to be.",
     "include_package_data": true,
     "install_requires": [
-           "mo-dots==4.22.21108", "mo-future==3.147.20327",    "mo-logs==4.23.21108",
-           "mo-math==4.23.21108"
+          "mo-dots==5.22.21182", "mo-future==5.17.21182",   "mo-logs==5.23.21182",
+          "mo-math==5.23.21182"
     ],
     "license": "MPL 2.0",
     "long_description": {
@@ -140,5 +142,5 @@
         "mo_times"
     ],
     "url": "https://github.com/klahnakoski/mo-times",
-    "version": "4.23.21108"
+    "version": "5.24.21182"
 }
