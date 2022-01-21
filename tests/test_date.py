@@ -22,60 +22,76 @@ from mo_times.durations import MONTH, YEAR, WEEK, Duration, DAY
 
 
 class TestDate(FuzzyTestCase):
-
-
     def test_mising_milli(self):
-        date = Date("2015-10-04 13:53:11", '%Y-%m-%d %H:%M:%S.%f')
+        date = Date("2015-10-04 13:53:11", "%Y-%m-%d %H:%M:%S.%f")
         expecting = Date(datetime(2015, 10, 4, 13, 53, 11))
         self.assertEqual(date, expecting)
 
     def test_max(self):
-        date = Date("2015-10-04 13:53:11", '%Y-%m-%d %H:%M:%S.%f')
+        date = Date("2015-10-04 13:53:11", "%Y-%m-%d %H:%M:%S.%f")
         self.assertEqual(MAX([None, date]), date)
 
     def test_floor_quarter(self):
-        date = Date("2015-10-04 13:53:11", '%Y-%m-%d %H:%M:%S.%f')
-        f = date.floor(3*MONTH)
+        date = Date("2015-10-04 13:53:11", "%Y-%m-%d %H:%M:%S.%f")
+        f = date.floor(3 * MONTH)
         expected = Date("2015-10-01")
         self.assertEqual(f, expected)
 
     def test_floor_year(self):
-        date = Date("2015-10-04 13:53:11", '%Y-%m-%d %H:%M:%S.%f')
+        date = Date("2015-10-04 13:53:11", "%Y-%m-%d %H:%M:%S.%f")
         f = date.floor(YEAR)
         expected = Date("2015-01-01")
         self.assertEqual(f, expected)
 
     def test_floor_year2(self):
-        date = Date("2015-10-04 13:53:11", '%Y-%m-%d %H:%M:%S.%f')
-        f = date.floor(2*YEAR)
+        date = Date("2015-10-04 13:53:11", "%Y-%m-%d %H:%M:%S.%f")
+        f = date.floor(2 * YEAR)
         expected = Date("2014-01-01")
         self.assertEqual(f, expected)
 
     def test_floor_week(self):
-        date = Date('2016-09-30 15:51:50')
+        date = Date("2016-09-30 15:51:50")
         f = date.floor(WEEK)
         expected = Date("2016-09-25")
         self.assertEqual(f, expected)
 
     def test_dow(self):
-        date = Date('2018-10-01 12:42:00')
-        self.assertEqual(date.dow, 0)   # MONDAY
+        date = Date("2018-10-01 12:42:00")
+        self.assertEqual(date.dow, 0)  # MONDAY
 
     def test_ceiling_hours(self):
-        date = Date('2018-10-01 12:42:00').ceiling(Duration("6hour"))
-        expected = Date('2018-10-01 18:00:00')
+        date = Date("2018-10-01 12:42:00").ceiling(Duration("6hour"))
+        expected = Date("2018-10-01 18:00:00")
         self.assertEqual(date, expected)
 
     def test_ceiling_hours_unchanged(self):
-        date = Date('2018-10-01 18:00:00').ceiling(Duration("6hour"))
-        expected = Date('2018-10-01 18:00:00')
+        date = Date("2018-10-01 18:00:00").ceiling(Duration("6hour"))
+        expected = Date("2018-10-01 18:00:00")
         self.assertEqual(date, expected)
 
     def test_create_date(self):
         from datetime import timezone
+
         test = Date(datetime(2020, 3, 21, 0, 0, 0, 0, timezone.utc))
         self.assertEqual(float(test), 1584748800)
 
     def test_div(self):
-        diff = Date.now()-(Date.now()-DAY)
-        self.assertEqual(diff/DAY, 1)
+        diff = Date.now() - (Date.now() - DAY)
+        self.assertEqual(diff / DAY, 1)
+
+    def test_date_range(self):
+        result = list(Date.range(Date("2011-01-01"), Date("2021-01-01"), YEAR))
+        expected = [
+            1293840000,
+            1325376000,
+            1356998400,
+            1388534400,
+            1420070400,
+            1451606400,
+            1483228800,
+            1514764800,
+            1546300800,
+            1577836800,
+        ]
+        self.assertAlmostEqual(result, expected)
+        self.assertAlmostEqual(expected, result)
