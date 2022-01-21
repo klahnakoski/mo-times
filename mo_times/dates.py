@@ -17,7 +17,7 @@ from decimal import Decimal
 from time import time as unix_now
 
 import mo_math
-from mo_dots import Null, coalesce
+from mo_dots import Null, coalesce, null_types
 from mo_future import is_text, PY3
 from mo_future import long, text, unichr
 from mo_logs import Except
