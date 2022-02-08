@@ -18,7 +18,7 @@ from mo_math import MAX
 from mo_testing.fuzzytestcase import FuzzyTestCase
 
 from mo_times.dates import Date
-from mo_times.durations import MONTH, YEAR, WEEK, Duration, DAY
+from mo_times.durations import MONTH, YEAR, WEEK, Duration, DAY, HOUR
 
 
 class TestDate(FuzzyTestCase):
@@ -95,3 +95,11 @@ class TestDate(FuzzyTestCase):
         ]
         self.assertAlmostEqual(result, expected)
         self.assertAlmostEqual(expected, result)
+
+    def test_hour_equals_hour(self):
+        self.assertEqual(Date("hour"), HOUR)
+
+    def test_parse_w_timezone(self):
+        test = Date("2022-02-04T06:05:55.038+0000")
+        expect = Date("2022-02-04T06:05:55.038000")
+        self.assertEqual(test, expect)
