@@ -16,7 +16,7 @@ from datetime import date, datetime, timedelta
 from decimal import Decimal
 from time import time as unix_now
 
-import mo_math
+from mo_math import is_integer
 from mo_dots import Null, coalesce, null_types
 from mo_future import is_text, PY3
 from mo_future import long, text, unichr
@@ -304,14 +304,15 @@ def parse(*args):
                     output = _unix2Date(a0 / 1000)
                 else:
                     output = _unix2Date(a0)
-            elif is_text(a0) and len(a0) in [9, 10, 12, 13] and mo_math.is_integer(a0):
-                a0 = float(a0)
-                if a0 > 9999999999:    # WAY TOO BIG IF IT WAS A UNIX TIMESTAMP
-                    output = _unix2Date(a0 / 1000)
-                else:
-                    output = _unix2Date(a0)
             elif is_text(a0):
-                output = unicode2Date(a0)
+                if len(a0) in [9, 10, 12, 13] and is_integer(a0):
+                    a0 = float(a0)
+                    if a0 > 9999999999:    # WAY TOO BIG IF IT WAS A UNIX TIMESTAMP
+                        output = _unix2Date(a0 / 1000)
+                    else:
+                        output = _unix2Date(a0)
+                else:
+                    output = unicode2Date(a0)
             else:
                 output = _unix2Date(datetime2unix(datetime(*args)))
         else:
@@ -443,6 +444,8 @@ def unicode2Date(value, format=None):
         pass
 
     formats = [
+        "%Y-%m-%dT%H:%M:%S%z",
+        "%Y-%m-%dT%H:%M:%S.%f%z",
         "%Y-%m-%dT%H:%M:%S",
         "%Y-%m-%dT%H:%M:%S.%f"
     ]
@@ -452,10 +455,8 @@ def unicode2Date(value, format=None):
         except Exception:
             pass
 
-
-
     deformats = [
-        "%Y-%m",# eg 2014-07-16 10:57 +0200
+        "%Y-%m",
         "%Y%m%d",
         "%d%m%Y",
         "%d%m%y",
