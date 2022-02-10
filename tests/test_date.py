@@ -103,3 +103,7 @@ class TestDate(FuzzyTestCase):
         test = Date("2022-02-04T06:05:55.038+0000")
         expect = Date("2022-02-04T06:05:55.038000")
         self.assertEqual(test, expect)
+
+    def test_duration_hashable(self):
+        a = {Duration("hour"): "hour"}
+        self.assertEqual(a[Duration("60minute")], "hour")
