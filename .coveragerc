@@ -5,7 +5,7 @@ source =
 omit =
     /tests/*
     /mo_times/vendor/*
-    
+
 [report]
 exclude_lines =
     pragma: no cover
