@@ -1,6 +1,6 @@
 # More Times!
 
-Assume time forms an algebraic field over GMT, finally! 
+Assume time forms an algebraic field over GMT. Finally! 
 
 
 ## Details 
