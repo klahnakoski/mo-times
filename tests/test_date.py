@@ -76,7 +76,8 @@ class TestDate(FuzzyTestCase):
         self.assertEqual(float(test), 1584748800)
 
     def test_div(self):
-        diff = Date.now() - (Date.now() - DAY)
+        now = Date.now()
+        diff = now - (now - DAY)
         self.assertEqual(diff / DAY, 1)
 
     def test_date_range(self):

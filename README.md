@@ -2,6 +2,11 @@
 
 Assume time forms an algebraic field over GMT. Finally! 
 
+[![PyPI Latest Release](https://img.shields.io/pypi/v/mo-times.svg)](https://pypi.org/project/mo-times/)
+[![Build Status](https://app.travis-ci.com/klahnakoski/mo-times.svg?branch=master)](https://travis-ci.com/github/klahnakoski/mo-times)
+ [![Coverage Status](https://coveralls.io/repos/github/klahnakoski/mo-times/badge.svg?branch=dev)](https://coveralls.io/github/klahnakoski/mo-times?branch=dev)
+[![Downloads](https://pepy.tech/badge/mo-times)](https://pepy.tech/project/mo-times)
+
 
 ## Details 
 
