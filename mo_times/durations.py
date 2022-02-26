@@ -69,6 +69,9 @@ class Duration(object):
         other = Duration(other)
         return self.milli == other.milli and self.month == other.month
 
+    def __hash__(self):
+        return hash((self.milli, self.month))
+
     def __req__(self, other):
         other = Duration(other)
         return self.milli == other.milli and self.month == other.month
