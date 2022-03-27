@@ -3,8 +3,8 @@ source =
     ./mo_times
 
 omit =
-    /tests/*
-    /mo_times/vendor/*
+    ./tests/*
+    ./mo_times/vendor/*
 
 [report]
 exclude_lines =
