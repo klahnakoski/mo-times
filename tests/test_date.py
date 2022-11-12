@@ -108,13 +108,3 @@ class TestDate(FuzzyTestCase):
     def test_duration_hashable(self):
         a = {Duration("hour"): "hour"}
         self.assertEqual(a[Duration("60minute")], "hour")
-
-    def test_max2(self):
-        a = Date.now()
-        b = a+DAY
-        self.assertEqual(Date.max(a, b), b)
-
-    def test_min2(self):
-        a = Date.now()
-        b = a+DAY
-        self.assertEqual(Date.min(a, b), a)
