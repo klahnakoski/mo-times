@@ -14,7 +14,6 @@ from __future__ import unicode_literals
 
 from datetime import datetime
 
-import mo_math
 from mo_math import MAX
 from mo_testing.fuzzytestcase import FuzzyTestCase
 
@@ -113,9 +112,9 @@ class TestDate(FuzzyTestCase):
     def test_max2(self):
         a = Date.now()
         b = a+DAY
-        self.assertEqual(mo_math.max(a, b), b)
+        self.assertEqual(Date.max(a, b), b)
 
     def test_min2(self):
         a = Date.now()
         b = a+DAY
-        self.assertEqual(mo_math.min(a, b), a)
+        self.assertEqual(Date.min(a, b), a)

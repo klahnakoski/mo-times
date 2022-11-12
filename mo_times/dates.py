@@ -16,6 +16,7 @@ from datetime import date, datetime, timedelta
 from decimal import Decimal
 from time import time as unix_now
 
+import mo_math
 from mo_math import is_integer
 from mo_dots import Null, coalesce, null_types
 from mo_future import is_text, PY3
@@ -268,6 +269,14 @@ class Date(object):
 
     def __data__(self):
         return self.unix
+
+    @classmethod
+    def min(cls, *values):
+        return mo_math.min(*values)
+
+    @classmethod
+    def max(cls, *values):
+        return mo_math.max(*values)
 
 
 def parse(*args):
