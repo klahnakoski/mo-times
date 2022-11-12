@@ -14,6 +14,7 @@ from __future__ import unicode_literals
 
 from datetime import datetime
 
+import mo_math
 from mo_math import MAX
 from mo_testing.fuzzytestcase import FuzzyTestCase
 
@@ -108,3 +109,13 @@ class TestDate(FuzzyTestCase):
     def test_duration_hashable(self):
         a = {Duration("hour"): "hour"}
         self.assertEqual(a[Duration("60minute")], "hour")
+
+    def test_max2(self):
+        a = Date.now()
+        b = a+DAY
+        self.assertEqual(mo_math.max(a, b), b)
+
+    def test_min2(self):
+        a = Date.now()
+        b = a+DAY
+        self.assertEqual(mo_math.min(a, b), a)

@@ -269,26 +269,6 @@ class Date(object):
     def __data__(self):
         return self.unix
 
-    @classmethod
-    def min(cls, *values):
-        output = Null
-        for v in values:
-            if output == None and v != None:
-                output = v
-            elif v < output:
-                output = v
-        return output
-
-    @classmethod
-    def max(cls, *values):
-        output = Null
-        for v in values:
-            if output == None and v != None:
-                output = v
-            elif v < output:
-                output = v
-        return output
-
 
 def parse(*args):
     try:
