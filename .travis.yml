@@ -8,6 +8,7 @@ env:
 install:
 - pip install coverage
 - pip install coveralls
+- cp packaging/setup.py .
 - pip install .
 - pip install -r tests/requirements.txt
 script:
