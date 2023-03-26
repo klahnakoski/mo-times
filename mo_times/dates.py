@@ -417,7 +417,7 @@ def unicode2Date(value, format=None):
 
     if format != None:
         try:
-            if format.endswith("%S.%f") and "." not in value:
+            if format.endswith(".%f") and "." not in value:
                 value += ".000"
             return _unix2Date(datetime2unix(datetime.strptime(value, format)))
         except Exception as e:
