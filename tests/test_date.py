@@ -118,3 +118,8 @@ class TestDate(FuzzyTestCase):
 
         dur = Duration(seconds=12.45)
         self.assertEqual(int(dur), 12)
+
+    def test_date(self):
+        example = "2023-03-25 17:04:01"
+        result = Date(example)
+        self.assertEqual(result.format(), example)
