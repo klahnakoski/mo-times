@@ -5,7 +5,7 @@ Copyright (c) 2003-2007  Gustavo Niemeyer <gustavo@niemeyer.net>
 This module offers extensions to the standard Python
 datetime module.
 """
-from __future__ import absolute_import, division, unicode_literals
+
 
 import datetime
 import string
