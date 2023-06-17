@@ -8,7 +8,6 @@
 #
 
 
-
 from datetime import timedelta
 from time import time
 
@@ -47,7 +46,7 @@ class Timer(object):
 
     def __enter__(self):
         if self.verbose and self.too_long == 0:
-            Log.note("Timer start: " + self.template, default_params=self.param, stack_depth=1)
+            Log.note("Timer start: " + self.template, default_params=self.param, stack_depth=1, static_template=False)
         self.start = time()
         return self
 
@@ -62,14 +61,14 @@ class Timer(object):
                     "Timer end  : " + self.template + " (took {{duration}})",
                     default_params=self.param,
                     stack_depth=1,
-                    static_template=False
+                    static_template=False,
                 )
             elif self.interval >= self.too_long:
                 Log.note(
                     "Time too long: " + self.template + " ({{duration}})",
                     default_params=self.param,
                     stack_depth=1,
-                    static_template=False
+                    static_template=False,
                 )
 
     @property
