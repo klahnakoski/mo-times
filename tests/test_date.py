@@ -123,3 +123,8 @@ class TestDate(FuzzyTestCase):
         example = "2023-03-25 17:04:01"
         result = Date(example)
         self.assertEqual(result.format(), example)
+
+    def test_date2(self):
+        example = "2023-11-10 20:17:35.821719"
+        result = Date(example)
+        self.assertEqual(result.format("%Y-%m-%d %H:%M:%S.%f"), example)

@@ -9,21 +9,19 @@
 #
 
 
-
 import math
 import re
 from datetime import date, datetime, timedelta
 from decimal import Decimal
 from time import time as unix_now
 
-from mo_math import is_integer
-from mo_dots import Null, coalesce, null_types
+from mo_dots import Null, null_types
 from mo_future import is_text, PY3
 from mo_future import long, text, unichr
-from mo_logs import Except
 from mo_logs.strings import deformat
+from mo_math import is_integer
+
 from mo_times.durations import Duration, MILLI_VALUES
-from mo_times.vendor.dateutil.parser import parse as parse_date
 
 _utcnow = datetime.utcnow
 
@@ -32,8 +30,8 @@ try:
 except Exception:
     pass
 
-ISO8601 = '%Y-%m-%dT%H:%M:%SZ'
-RFC1123 = '%a, %d %b %Y %H:%M:%S GMT'
+ISO8601 = "%Y-%m-%dT%H:%M:%SZ"
+RFC1123 = "%a, %d %b %Y %H:%M:%S GMT"
 
 
 class Date(object):
@@ -93,10 +91,10 @@ class Date(object):
             return _unix2Date(math.floor(self.unix / 86400) * 86400)
         elif duration.month:
             dt = unix2datetime(self.unix)
-            month = int(math.floor((dt.year*12+dt.month-1) / duration.month) * duration.month)
-            year = int(math.floor(month/12))
-            month -= 12*year
-            return Date(datetime(year, month+1, 1))
+            month = int(math.floor((dt.year * 12 + dt.month - 1) / duration.month) * duration.month)
+            year = int(math.floor(month / 12))
+            month -= 12 * year
+            return Date(datetime(year, month + 1, 1))
         elif duration.milli % (7 * 86400000) == 0:
             offset = 4 * 86400
             return _unix2Date(math.floor((self.unix + offset) / duration.seconds) * duration.seconds - offset)
@@ -109,7 +107,7 @@ class Date(object):
         except Exception as e:
             from mo_logs import Log
 
-            Log.error("Can not format {{value}} with {{format}}", value=unix2datetime(self.unix), format=format, cause=e)
+            Log.error("Can not format {value} with {format}", value=unix2datetime(self.unix), format=format, cause=e)
 
     @property
     def datetime(self):
@@ -120,14 +118,14 @@ class Date(object):
 
     @property
     def milli(self):
-        return self.unix*1000
+        return self.unix * 1000
 
     @property
     def hour(self):
         """
         :return: HOUR (int) IN THE GMT DAY
         """
-        return int(int(self.unix)/60/60 % 24)
+        return int(int(self.unix) / 60 / 60 % 24)
 
     @property
     def dow(self):
@@ -140,7 +138,7 @@ class Date(object):
         return Date(unix2datetime(self.unix) + timedelta(days=1))
 
     def add(self, other):
-        if other==None:
+        if other == None:
             return Null
         elif isinstance(other, (datetime, date)):
             return _unix2Date(self.unix - datetime2unix(other))
@@ -151,9 +149,9 @@ class Date(object):
         elif isinstance(other, Duration):
             if other.month:
                 value = unix2datetime(self.unix)
-                if (value+timedelta(days=1)).month != value.month:
+                if (value + timedelta(days=1)).month != value.month:
                     # LAST DAY OF MONTH
-                    output = add_month(value+timedelta(days=1), other.month) - timedelta(days=1)
+                    output = add_month(value + timedelta(days=1), other.month) - timedelta(days=1)
                     return Date(output)
                 else:
                     day = value.day
@@ -300,14 +298,14 @@ def parse(*args):
                 output = _unix2Date(a0.unix)
             elif isinstance(a0, (int, long, float, Decimal)):
                 a0 = float(a0)
-                if a0 > 9999999999:    # WAY TOO BIG IF IT WAS A UNIX TIMESTAMP
+                if a0 > 9999999999:  # WAY TOO BIG IF IT WAS A UNIX TIMESTAMP
                     output = _unix2Date(a0 / 1000)
                 else:
                     output = _unix2Date(a0)
             elif is_text(a0):
                 if len(a0) in [9, 10, 12, 13] and is_integer(a0):
                     a0 = float(a0)
-                    if a0 > 9999999999:    # WAY TOO BIG IF IT WAS A UNIX TIMESTAMP
+                    if a0 > 9999999999:  # WAY TOO BIG IF IT WAS A UNIX TIMESTAMP
                         output = _unix2Date(a0 / 1000)
                     else:
                         output = _unix2Date(a0)
@@ -325,11 +323,11 @@ def parse(*args):
     except Exception as e:
         from mo_logs import Log
 
-        Log.error("Can not convert {{args}} to Date", args=args, cause=e)
+        Log.error("Can not convert {args} to Date", args=args, cause=e)
 
 
 def add_month(offset, months):
-    month = int(offset.month+months-1)
+    month = int(offset.month + months - 1)
     year = offset.year
     if not 0 <= month < 12:
         r = _mod(month, 12)
@@ -344,7 +342,7 @@ def add_month(offset, months):
         hour=offset.hour,
         minute=offset.minute,
         second=offset.second,
-        microsecond=offset.microsecond
+        microsecond=offset.microsecond,
     )
     return output
 
@@ -357,7 +355,7 @@ def set_day(offset, day):
         hour=offset.hour,
         minute=offset.minute,
         second=offset.second,
-        microsecond=offset.microsecond
+        microsecond=offset.microsecond,
     )
     return output
 
@@ -366,6 +364,7 @@ def parse_time_expression(value):
     def simple_date(sign, dig, type, floor):
         if dig or sign:
             from mo_logs import Log
+
             Log.error("can not accept a multiplier on a datetime")
 
         if floor:
@@ -373,23 +372,23 @@ def parse_time_expression(value):
         else:
             return Date(type)
 
-    terms = re.match(r'(\d*[|\w]+)\s*([+-]\s*\d*[|\w]+)*', value).groups()
+    terms = re.match(r"(\d*[|\w]+)\s*([+-]\s*\d*[|\w]+)*", value).groups()
 
-    sign, dig, type = re.match(r'([+-]?)\s*(\d*)([|\w]+)', terms[0]).groups()
+    sign, dig, type = re.match(r"([+-]?)\s*(\d*)([|\w]+)", terms[0]).groups()
     if "|" in type:
         type, floor = type.split("|")
     else:
         floor = None
 
     if type in MILLI_VALUES.keys():
-        value = Duration(dig+type)
+        value = Duration(dig + type)
     else:
         value = simple_date(sign, dig, type, floor)
 
     for term in terms[1:]:
         if not term:
             continue
-        sign, dig, type = re.match(r'([+-])\s*(\d*)([|\w]+)', term).groups()
+        sign, dig, type = re.match(r"([+-])\s*(\d*)([|\w]+)", term).groups()
         if "|" in type:
             type, floor = type.split("|")
         else:
@@ -399,12 +398,62 @@ def parse_time_expression(value):
         if type in MILLI_VALUES.keys():
             if floor:
                 from mo_logs import Log
+
                 Log.error("floor (|) of duration not accepted")
-            value = value.__getattribute__(op)(Duration(dig+type))
+            value = value.__getattribute__(op)(Duration(dig + type))
         else:
             value = value.__getattribute__(op)(simple_date(sign, dig, type, floor))
 
     return value
+
+
+def _formatted(format):
+    def _parse(value):
+        return _unix2Date(datetime2unix(datetime.strptime(value, format)))
+
+    return _parse
+
+
+def _deformatted(format):
+    def _parse(value):
+        return _unix2Date(datetime2unix(datetime.strptime(deformat(value), format)))
+
+    return _parse
+
+
+_datetime_formats = [
+    "%Y-%m-%dT%H:%M:%S%z",
+    "%Y-%m-%dT%H:%M:%S.%f%z",
+    "%Y-%m-%dT%H:%M:%S",
+    "%Y-%m-%dT%H:%M:%S.%f",
+    "%Y-%m-%d %H:%M:%S",
+    "%Y-%m-%d %H:%M:%S.%f",
+]
+
+_deformats = [
+    "%Y-%m",
+    "%Y%m%d",
+    "%d%m%Y",
+    "%d%m%y",
+    "%d%b%Y",
+    "%d%b%y",
+    "%d%B%Y",
+    "%d%B%y",
+    "%B%d%Y",
+    "%b%d%Y",
+    "%B%d%",
+    "%b%d%y",
+    "%Y%m%d%H%M%S",
+    "%Y%m%dT%H%M%S",
+    "%d%m%Y%H%M%S",
+    "%d%m%y%H%M%S",
+    "%d%b%Y%H%M%S",
+    "%d%b%y%H%M%S",
+    "%d%B%Y%H%M%S",
+    "%d%B%y%H%M%S%Y%m%d%H%M%S%f",
+]
+
+attempts = [*(_formatted(f) for f in _datetime_formats), *(_deformatted(f) for f in _deformats)]
 
 
 def unicode2Date(value, format=None):
@@ -433,65 +482,26 @@ def unicode2Date(value, format=None):
     elif value.lower() in ["eod", "tomorrow"]:
         return _unix2Date(math.floor(datetime2unix(_utcnow()) / 86400) * 86400 + 86400)
 
-    if any(value.lower().find(n) >= 0 for n in ["now", "today", "eod", "tomorrow"] + list(MILLI_VALUES.keys())):
+    if any(n in value.lower() for n in ["now", "today", "eod", "tomorrow"] + list(MILLI_VALUES.keys())):
         return parse_time_expression(value)
 
-    try:  # 2.7 DOES NOT SUPPORT %z
-        local_value = parse_date(value)  #eg 2014-07-16 10:57 +0200
-        return _unix2Date(datetime2unix((local_value - coalesce(local_value.utcoffset(), 0)).replace(tzinfo=None)))
-    except Exception as e:
-        e = Except.wrap(e)  # FOR DEBUGGING
-        pass
-
-    formats = [
-        "%Y-%m-%dT%H:%M:%S%z",
-        "%Y-%m-%dT%H:%M:%S.%f%z",
-        "%Y-%m-%dT%H:%M:%S",
-        "%Y-%m-%dT%H:%M:%S.%f"
-    ]
-    for f in formats:
+    for f in attempts:
         try:
-            return _unix2Date(datetime2unix(datetime.strptime(value, f)))
-        except Exception:
+            result = f(value)
+            attempts.remove(f)
+            attempts.insert(0, f)
+            return result
+        except Exception as cause:
             pass
-
-    deformats = [
-        "%Y-%m",
-        "%Y%m%d",
-        "%d%m%Y",
-        "%d%m%y",
-        "%d%b%Y",
-        "%d%b%y",
-        "%d%B%Y",
-        "%d%B%y",
-        "%B%d%Y",
-        "%b%d%Y",
-        "%B%d%",
-        "%b%d%y",
-        "%Y%m%d%H%M%S",
-        "%Y%m%dT%H%M%S",
-        "%d%m%Y%H%M%S",
-        "%d%m%y%H%M%S",
-        "%d%b%Y%H%M%S",
-        "%d%b%y%H%M%S",
-        "%d%B%Y%H%M%S",
-        "%d%B%y%H%M%S"
-        "%Y%m%d%H%M%S%f",
-    ]
-    value = deformat(value)
-    for f in deformats:
-        try:
-            return unicode2Date(value, format=f)
-        except Exception:
-            pass
-
     else:
         from mo_logs import Log
+
         Log.error("Can not interpret {{value}} as a datetime", value=value)
 
 
 if PY3:
     from datetime import timezone
+
     DATETIME_EPOCH = datetime(1970, 1, 1, tzinfo=timezone.utc)
 else:
     DATETIME_EPOCH = datetime(1970, 1, 1)
@@ -513,9 +523,11 @@ def datetime2unix(value):
             return diff.total_seconds()
         else:
             from mo_logs import Log
+
             Log.error("Can not convert {{value}} of type {{type}}", value=value, type=value.__class__)
     except Exception as e:
         from mo_logs import Log
+
         Log.error("Can not convert {{value}}", value=value, cause=e)
 
 
@@ -526,12 +538,14 @@ def unix2datetime(unix):
         return datetime.utcfromtimestamp(unix)
     except Exception as e:
         from mo_logs import Log
+
         Log.error("Can not convert {{value}} to datetime", value=unix, cause=e)
 
 
 def unix2Date(unix):
     if not isinstance(unix, float):
         from mo_logs import Log
+
         Log.error("problem")
     return _unix2Date(unix)
 
@@ -559,6 +573,7 @@ def deformat(value):
 
 if PY3:
     from datetime import timezone
+
     Date.MIN = Date(datetime(1, 1, 1, tzinfo=timezone.utc))
     Date.MAX = Date(datetime(2286, 11, 20, 17, 46, 39, tzinfo=timezone.utc))
     Date.EPOCH = _unix2Date(0)
@@ -566,6 +581,7 @@ else:
     Date.MIN = Date(datetime(1, 1, 1))
     Date.MAX = Date(datetime(2286, 11, 20, 17, 46, 39))
     Date.EPOCH = _unix2Date(0)
+
 
 def _mod(value, mod=1):
     """
