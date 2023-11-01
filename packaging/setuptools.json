@@ -16,7 +16,7 @@
     "extras_require": {"tests": ["mo-testing>3"]},
     "include_package_data": true,
     "install_requires": [
-          "mo-dots==9.450.23304", "mo-future==7.449.23304",   "mo-logs==8.445.23282",
+          "mo-dots==9.450.23304", "mo-future==7.449.23304",   "mo-logs==8.451.23305",
           "mo-math==7.450.23304"
     ],
     "license": "MPL 2.0",
