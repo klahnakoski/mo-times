@@ -27,3 +27,11 @@ class TestTimer(TestCase):
         self.assertEqual(logger.main_log.lines[0], "Timer start: test 10")
         self.assertTrue(logger.main_log.lines[1].startswith("Time too long: test 10 "))
         logger.main_log = temp
+
+    def test_timer_too_long_quiet(self):
+        logger.main_log, temp = StructuredLogger_usingList(), logger.main_log
+        with Timer("test {i}", param=dict(i=10), too_long=0.1) as timer:
+            sleep(0.05)
+
+        self.assertEqual(len(logger.main_log.lines), 0)
+        logger.main_log = temp
