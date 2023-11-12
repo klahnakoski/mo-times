@@ -128,3 +128,35 @@ class TestDate(FuzzyTestCase):
         example = "2023-11-10 20:17:35.821719"
         result = Date(example)
         self.assertEqual(result.format("%Y-%m-%d %H:%M:%S.%f"), example)
+
+    def test_date3(self):
+        example = "February 3, 2023"
+        result = Date(example).format("%Y-%m-%d")
+        self.assertEqual(result, "2023-02-03")
+
+    def test_date4(self):
+        example = "Feb. 3"
+        result = Date(example).format("%Y-%m-%d")
+        self.assertEqual(result, "2023-02-03")
+
+    def test_subtraction(self):
+        now = Date.now().datetime
+        self.assertIsInstance(now - MONTH, Date)
+        self.assertEqual(Date(now - MONTH), Date(now) - MONTH)
+
+    def test_month_feb(self):
+        self.assertEqual(Date("2024-02-27") - YEAR, Date("2023-02-27"))
+        self.assertEqual(Date("2024-02-28") - YEAR, Date("2023-02-28"))
+        self.assertEqual(Date("2024-02-29") - YEAR, Date("2023-02-28"))
+        self.assertEqual(Date("2024-03-01") - YEAR, Date("2023-03-01"))
+
+        self.assertEqual(Date("2023-02-27") + YEAR, Date("2024-02-27"))
+        self.assertEqual(Date("2023-02-28") + YEAR, Date("2024-02-29"))
+        self.assertEqual(Date("2024-02-29") + YEAR - YEAR, Date("2024-02-29"))
+
+        self.assertEqual(Date("2024-03-01") - YEAR, Date("2023-03-01"))
+        self.assertEqual(Date("2023-01-28") + MONTH, Date("2023-02-28"))
+        self.assertEqual(Date("2023-01-29") + MONTH, Date("2023-02-28"))
+        self.assertEqual(Date("2023-01-30") + MONTH, Date("2023-02-28"))
+        self.assertEqual(Date("2023-01-31") + MONTH, Date("2023-02-28"))
+        self.assertEqual(Date("2023-01-31") + MONTH + MONTH, Date("2023-03-31"))

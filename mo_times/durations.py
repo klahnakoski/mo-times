@@ -14,10 +14,8 @@ import re
 
 from mo_dots import get_module, dict_to_data
 from mo_future import is_text, text
-from mo_imports import delay_import, expect
+from mo_imports import delay_import
 from mo_math import MIN, is_nan, is_number, abs, floor, round
-
-from mo_times.vendor.dateutil.relativedelta import relativedelta
 
 Date = delay_import("mo_times.Date")
 Log = delay_import("mo_logs.Log")
@@ -103,7 +101,6 @@ class Duration(object):
         output.month = -self.month
         return output
 
-
     def __rmul__(self, amount):
         amount = float(amount)
         output = Duration(0)
@@ -162,7 +159,8 @@ class Duration(object):
             output.month = time.month - self.month
             return output
         else:
-            return time - relativedelta(months=self.month, seconds=self.milli/1000)
+            # ASSUME time CAN BE CONVERTED TO A Date
+            return Date(time) - self
 
     def __lt__(self, other):
         if other == None:

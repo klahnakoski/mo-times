@@ -6,8 +6,6 @@
 #
 # Contact: Kyle Lahnakoski (kyle@lahnakoski.com)
 #
-
-
 from datetime import timedelta
 from time import time
 
@@ -45,7 +43,7 @@ class Timer(object):
         self.interval = None
 
     def __enter__(self):
-        if self.verbose and self.too_long == 0:
+        if self.verbose:
             Log.note("Timer start: " + self.template, default_params=self.param, stack_depth=1, static_template=False)
         self.start = time()
         return self
