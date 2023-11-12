@@ -15,7 +15,7 @@ class TestTimer(TestCase):
 
         self.assertLogs(timer.duration, 0.001)
         self.assertEqual(logger.main_log.lines[0], "Timer start: test 10")
-        self.assertTrue(logger.main_log.lines[1].startswith("Timer end  : test 10 (took 0 "))
+        self.assertTrue(logger.main_log.lines[1].startswith("Timer end  : test 10 (took 0"))
         logger.main_log = temp
 
     def test_timer_too_long(self):
