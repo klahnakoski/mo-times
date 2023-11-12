@@ -6,7 +6,7 @@ setup(
     author_email='kyle@lahnakoski.com',
     classifiers=["Development Status :: 4 - Beta","Programming Language :: Python :: 3.7","Programming Language :: Python :: 3.9","Topic :: Software Development :: Libraries","Topic :: Software Development :: Libraries :: Python Modules","License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)","Programming Language :: Python :: 3.10","Programming Language :: Python :: 3.8","Programming Language :: Python :: 3.11"],
     description='More Time! Time as a vector space, the way it was meant to be.',
-    extras_require={"tests":["mo-testing>3","mo-threads"]},
+    extras_require={"tests":["mo-testing>3"]},
     include_package_data=True,
     install_requires=["mo-dots==9.455.23316","mo-future==7.449.23304","mo-logs==8.456.23316","mo-math==7.455.23316"],
     license='MPL 2.0',
@@ -15,5 +15,5 @@ setup(
     name='mo-times',
     packages=["mo_times"],
     url='https://github.com/klahnakoski/mo-times',
-    version='5.457.23316'
+    version='5.458.23316'
 )
