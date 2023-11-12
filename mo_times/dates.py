@@ -15,7 +15,6 @@ from datetime import date, datetime, timedelta
 from decimal import Decimal
 from time import time as unix_now
 
-from dateutil.relativedelta import relativedelta
 from mo_dots import Null, null_types
 from mo_future import is_text, PY3
 from mo_future import long, text, unichr
@@ -135,8 +134,10 @@ class Date(object):
         """
         return int(self.unix / 60 / 60 / 24 / 7 + 5) % 7
 
-    def addDay(self):
+    def add_day(self):
         return Date(unix2datetime(self.unix) + timedelta(days=1))
+
+    addDay = add_day
 
     def add(self, other):
         if other == None:
@@ -145,7 +146,7 @@ class Date(object):
             return _unix2Date(self.unix - datetime2unix(other))
         elif isinstance(other, Date):
             return _unix2Date(self.unix - other.unix)
-        elif isinstance(other, timedelta):
+        elif other.__class__.__name__ == "timedelta":
             return Date(unix2datetime(self.unix) + other)
         elif isinstance(other, Duration):
             if other.month:
