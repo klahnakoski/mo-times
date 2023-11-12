@@ -15,6 +15,7 @@ from datetime import date, datetime, timedelta
 from decimal import Decimal
 from time import time as unix_now
 
+from dateutil.relativedelta import relativedelta
 from mo_dots import Null, null_types
 from mo_future import is_text, PY3
 from mo_future import long, text, unichr
@@ -410,15 +411,27 @@ def parse_time_expression(value):
 def _formatted(format):
     def _parse(value):
         return _unix2Date(datetime2unix(datetime.strptime(value, format)))
-
+    setattr(_parse, "format", format)
     return _parse
 
 
 def _deformatted(format):
-    def _parse(value):
-        return _unix2Date(datetime2unix(datetime.strptime(deformat(value), format)))
+    if "%y" in format.lower():
+        def parse(value):
+            return _unix2Date(datetime2unix(datetime.strptime(deformat(value), format)))
+        setattr(parse, "format", format)
+        return parse
 
-    return _parse
+    def sans_year(value):
+        now = unix2datetime(unix_now())
+        year = now.strftime("%Y")
+        candidate = datetime.strptime(year+deformat(value), "%Y"+format)
+        if candidate > now:
+            return _unix2Date(datetime2unix(candidate - relativedelta(years=1)))
+        else:
+            return _unix2Date(datetime2unix(candidate))
+    setattr(sans_year, "format", format)
+    return sans_year
 
 
 _datetime_formats = [
@@ -441,8 +454,10 @@ _deformats = [
     "%d%B%y",
     "%B%d%Y",
     "%b%d%Y",
-    "%B%d%",
+    "%B%d%Y",
+    "%B%d",
     "%b%d%y",
+    "%b%d",
     "%Y%m%d%H%M%S",
     "%Y%m%dT%H%M%S",
     "%d%m%Y%H%M%S",
@@ -450,7 +465,8 @@ _deformats = [
     "%d%b%Y%H%M%S",
     "%d%b%y%H%M%S",
     "%d%B%Y%H%M%S",
-    "%d%B%y%H%M%S%Y%m%d%H%M%S%f",
+    "%d%B%y%H%M%S",
+    "%Y%m%d%H%M%S%f",
 ]
 
 attempts = [*(_formatted(f) for f in _datetime_formats), *(_deformatted(f) for f in _deformats)]
