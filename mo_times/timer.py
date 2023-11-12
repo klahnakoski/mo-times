@@ -35,7 +35,7 @@ class Timer(object):
     ):
         self.template = description
         self.param = to_data(coalesce(param, {}))
-        self.verbose = coalesce(verbose, False if silent is True else True)
+        self.verbose = coalesce(verbose, False if silent is True else too_long == 0)
         self.agg = 0
         self.too_long = too_long  # ONLY SHOW TIMING FOR DURATIONS THAT ARE too_long
         self.start = 0

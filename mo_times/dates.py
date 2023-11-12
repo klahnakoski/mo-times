@@ -157,7 +157,9 @@ class Date(object):
                     return Date(output)
                 else:
                     day = value.day
-                    num_days = (add_month(datetime(value.year, value.month, 1), other.month+1) - timedelta(days=1)).day
+                    num_days = (
+                        add_month(datetime(value.year, value.month, 1), other.month + 1) - timedelta(days=1)
+                    ).day
                     day = min(day, num_days)
                     curr = set_day(value, day)
                     output = add_month(curr, other.month)
@@ -412,25 +414,29 @@ def parse_time_expression(value):
 def _formatted(format):
     def _parse(value):
         return _unix2Date(datetime2unix(datetime.strptime(value, format)))
+
     setattr(_parse, "format", format)
     return _parse
 
 
 def _deformatted(format):
     if "%y" in format.lower():
+
         def parse(value):
             return _unix2Date(datetime2unix(datetime.strptime(deformat(value), format)))
+
         setattr(parse, "format", format)
         return parse
 
     def sans_year(value):
         now = unix2datetime(unix_now())
         year = now.strftime("%Y")
-        candidate = datetime.strptime(year+deformat(value), "%Y"+format)
+        candidate = datetime.strptime(year + deformat(value), "%Y" + format)
         if candidate > now:
             return _unix2Date(datetime2unix(candidate - relativedelta(years=1)))
         else:
             return _unix2Date(datetime2unix(candidate))
+
     setattr(sans_year, "format", format)
     return sans_year
 
