@@ -160,3 +160,7 @@ class TestDate(FuzzyTestCase):
         self.assertEqual(Date("2023-01-30") + MONTH, Date("2023-02-28"))
         self.assertEqual(Date("2023-01-31") + MONTH, Date("2023-02-28"))
         self.assertEqual(Date("2023-01-31") + MONTH + MONTH, Date("2023-03-31"))
+
+    def test_year_is_year(self):
+        now = Date.now()
+        self.assertEqual(now + YEAR, now + Duration(YEAR))
