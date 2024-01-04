@@ -164,3 +164,4 @@ class TestDate(FuzzyTestCase):
     def test_year_is_year(self):
         now = Date.now()
         self.assertEqual(now + YEAR, now + Duration(YEAR))
+

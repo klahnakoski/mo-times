@@ -237,9 +237,6 @@ class Duration(object):
         return int(self.seconds)
 
     def __str__(self):
-        return str(self.__unicode__())
-
-    def __unicode__(self):
         if not self.milli:
             return "zero"
 
