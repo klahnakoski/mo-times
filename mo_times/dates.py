@@ -22,8 +22,8 @@ from mo_logs.strings import deformat
 from mo_math import is_integer
 
 from mo_times.durations import Duration, MILLI_VALUES
+from mo_future import utcnow as _utcnow, utcfromtimestamp
 
-_utcnow = datetime.utcnow
 
 try:
     import pytz
@@ -32,6 +32,10 @@ except Exception:
 
 ISO8601 = "%Y-%m-%dT%H:%M:%SZ"
 RFC1123 = "%a, %d %b %Y %H:%M:%S GMT"
+
+
+
+
 
 
 class Date(object):
@@ -114,7 +118,7 @@ class Date(object):
         """
         RETURN AS PYTHON DATETIME (GMT)
         """
-        return datetime.utcfromtimestamp(self.unix)
+        return utcfromtimestamp(self.unix)
 
     @property
     def milli(self):
@@ -558,7 +562,7 @@ def unix2datetime(unix):
     if unix == None:
         return Null
     try:
-        return datetime.utcfromtimestamp(unix)
+        return utcfromtimestamp(unix)
     except Exception as e:
         from mo_logs import Log
 
