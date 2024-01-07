@@ -10,8 +10,8 @@ install:
 - pip install coverage
 - pip install coveralls
 - cp packaging/setup.py .
-- pip install .
 - pip install -r tests/requirements.txt
+- pip install .
 script:
 - python -m unittest discover -v tests
 after_success:
