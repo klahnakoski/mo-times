@@ -15,5 +15,5 @@ setup(
     name='mo-times',
     packages=["mo_times"],
     url='https://github.com/klahnakoski/mo-times',
-    version='5.478.24007'
+    version='5.481.24007'
 )
