@@ -34,16 +34,16 @@ class Duration(object):
             else:
                 return None
 
-        if is_number(value):
+        if isinstance(value, Duration):
+            output.milli = value.milli
+            output.month = value.month
+            return output
+        elif is_number(value):
             output._milli = float(value) * 1000
             output.month = 0
             return output
         elif is_text(value):
             return parse(value)
-        elif isinstance(value, Duration):
-            output.milli = value.milli
-            output.month = value.month
-            return output
         elif isinstance(value, float) and is_nan(value):
             return None
         else:
@@ -237,9 +237,6 @@ class Duration(object):
         return int(self.seconds)
 
     def __str__(self):
-        return str(self.__unicode__())
-
-    def __unicode__(self):
         if not self.milli:
             return "zero"
 
@@ -326,10 +323,10 @@ def _string2Duration(text):
     if text == "" or text == "zero":
         return ZERO
 
-    amount, interval = re.match(r"([\d\.]*)(.*)", text).groups()
+    amount, interval = re.match(r"([\d\.]*)(\w*)", text).groups()
     amount = int(amount) if amount else 1
 
-    if MILLI_VALUES[interval] == None:
+    if interval not in MILLI_VALUES:
         from mo_logs import Log
 
         Log.error(
@@ -343,8 +340,8 @@ def _string2Duration(text):
     if MONTH_VALUES[interval] == 0:
         output.milli = amount * MILLI_VALUES[interval]
     else:
-        output.milli = amount * MONTH_VALUES[interval] * MILLI_VALUES.month
         output.month = amount * MONTH_VALUES[interval]
+        output.milli = output.month * MILLI_VALUES.month
 
     return output
 
