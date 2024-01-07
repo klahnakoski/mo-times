@@ -21,7 +21,7 @@ from mo_future import long, text, unichr
 from mo_logs.strings import deformat
 from mo_math import is_integer
 
-from mo_times.durations import Duration, MILLI_VALUES
+from mo_times.durations import Duration, MILLI_VALUES, YEAR
 from mo_future import utcnow as _utcnow, utcfromtimestamp
 
 
@@ -32,10 +32,6 @@ except Exception:
 
 ISO8601 = "%Y-%m-%dT%H:%M:%SZ"
 RFC1123 = "%a, %d %b %Y %H:%M:%S GMT"
-
-
-
-
 
 
 class Date(object):
@@ -138,8 +134,12 @@ class Date(object):
         """
         return int(self.unix / 60 / 60 / 24 / 7 + 5) % 7
 
+    @property
+    def year(self):
+        return unix2datetime(self.unix).year
+
     def add_day(self):
-        return Date(unix2datetime(self.unix) + timedelta(days=1))
+        return _unix2Date(datetime2unix(unix2datetime(self.unix) + timedelta(days=1)))
 
     addDay = add_day
 
@@ -433,13 +433,14 @@ def _deformatted(format):
         return parse
 
     def sans_year(value):
-        now = unix2datetime(unix_now())
-        year = now.strftime("%Y")
+        now = Date.now()
+        year = str(now.year)
         candidate = datetime.strptime(year + deformat(value), "%Y" + format)
+        candidate = _unix2Date(datetime2unix(candidate.replace(tzinfo=timezone.utc)))
         if candidate > now:
-            return _unix2Date(datetime2unix(candidate - relativedelta(years=1)))
+            return candidate - YEAR
         else:
-            return _unix2Date(datetime2unix(candidate))
+            return candidate
 
     setattr(sans_year, "format", format)
     return sans_year
@@ -598,16 +599,9 @@ def deformat(value):
     return "".join(output)
 
 
-if PY3:
-    from datetime import timezone
-
-    Date.MIN = Date(datetime(1, 1, 1, tzinfo=timezone.utc))
-    Date.MAX = Date(datetime(2286, 11, 20, 17, 46, 39, tzinfo=timezone.utc))
-    Date.EPOCH = _unix2Date(0)
-else:
-    Date.MIN = Date(datetime(1, 1, 1))
-    Date.MAX = Date(datetime(2286, 11, 20, 17, 46, 39))
-    Date.EPOCH = _unix2Date(0)
+Date.MIN = Date(datetime(1, 1, 1, tzinfo=timezone.utc))
+Date.MAX = Date(datetime(2286, 11, 20, 17, 46, 39, tzinfo=timezone.utc))
+Date.EPOCH = _unix2Date(0)
 
 
 def _mod(value, mod=1):
