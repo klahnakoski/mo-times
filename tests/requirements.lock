@@ -8,7 +8,7 @@ mo-logs==8.522.24033
 mo-math==7.521.24032
 mo-testing==7.454.23305
 mo-threads==6.453.23305
-mo-times==5.522.24033
+mo-times==5.451.23305
 pip==23.3.2
 setuptools==69.0.3
 wheel==0.42.0
