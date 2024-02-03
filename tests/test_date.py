@@ -11,12 +11,13 @@
 from datetime import datetime
 
 from mo_math import MAX
-from mo_testing.fuzzytestcase import FuzzyTestCase
+from mo_testing.fuzzytestcase import FuzzyTestCase, add_error_reporting
 
 from mo_times.dates import Date
 from mo_times.durations import MONTH, YEAR, WEEK, Duration, DAY, HOUR
 
 
+@add_error_reporting
 class TestDate(FuzzyTestCase):
     def test_mising_milli(self):
         date = Date("2015-10-04 13:53:11", "%Y-%m-%d %H:%M:%S.%f")
@@ -133,7 +134,13 @@ class TestDate(FuzzyTestCase):
     def test_date4(self):
         example = "Feb. 3"
         result = Date(example).format("%Y-%m-%d")
-        self.assertEqual(result, "2023-02-03")
+
+        today = Date.today()
+        if today < Date(f"{today.year}-02-03"):
+            expected = f"{today.year-1}-02-03"
+        else:
+            expected = f"{today.year}-02-03"
+        self.assertEqual(result, expected)
 
     def test_subtraction(self):
         now = Date.now().datetime
@@ -160,4 +167,18 @@ class TestDate(FuzzyTestCase):
     def test_year_is_year(self):
         now = Date.now()
         self.assertEqual(now + YEAR, now + Duration(YEAR))
+
+    def test_single_digits(self):
+        self.assertEqual(Date("2023-01-01"), Date("2023-1-1"))
+
+    def test_single_digits2(self):
+        self.assertEqual(Date("2023-01-01"), Date("2023-1-01"))
+
+    def test_single_time_digits(self):
+        self.assertEqual(Date("2023-01-01 01:01:01"), Date("2023-01-01 1:1:1"))
+
+    def test_div(self):
+        self.assertEqual("day"/HOUR, 24)
+        self.assertEqual(DAY/"hour", 24)
+
 
