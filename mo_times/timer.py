@@ -29,12 +29,12 @@ class Timer(object):
     """
 
     def __init__(
-            self,
-            description,  # A DESCRIPTION
-            param=None,  # description CAN HAVE PARAMETERS, PUT THEM HERE
-            silent=None,  # DO NOT LOG
-            verbose=None,  # PLEASE LOG
-            too_long=0,  # ONLY LOG IF MORE THAN THIS NUMBER OF SECONDS
+        self,
+        description,  # A DESCRIPTION
+        param=None,  # description CAN HAVE PARAMETERS, PUT THEM HERE
+        silent=None,  # DO NOT LOG
+        verbose=None,  # PLEASE LOG
+        too_long=0,  # ONLY LOG IF MORE THAN THIS NUMBER OF SECONDS
     ):
         self.template = description
         self.param = to_data(coalesce(param, {}))
@@ -47,7 +47,9 @@ class Timer(object):
 
     def __enter__(self):
         if self.verbose:
-            logger.note("Timer start: " + self.template, default_params=self.param, stack_depth=1, static_template=False)
+            logger.note(
+                "Timer start: " + self.template, default_params=self.param, stack_depth=1, static_template=False
+            )
         self.start = time()
         return self
 

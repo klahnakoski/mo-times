@@ -104,7 +104,9 @@ class Date(object):
         try:
             return str(unix2datetime(self.unix).strftime(format))
         except Exception as e:
-            logger.error("Can not format {value} with {format}", value=unix2datetime(self.unix), format=format, cause=e)
+            logger.error(
+                "Can not format {value} with {format}", value=unix2datetime(self.unix), format=format, cause=e
+            )
 
     @property
     def datetime(self):
@@ -521,7 +523,6 @@ def unicode2Date(value, format=None):
         logger.error("Can not interpret {{value}} as a datetime", value=value)
 
 
-
 def datetime2unix(value):
     try:
         if value == None:
@@ -562,14 +563,14 @@ def _unix2Date(unix):
     return output
 
 
-_non_alpha_num = re.compile(r'[^a-zA-Z0-9]+')
+_non_alpha_num = re.compile(r"[^a-zA-Z0-9]+")
 
 
 def deformat(value):
     """
     REPLACE CONSECUTIVE NON-ALPHANUMERIC CHARACTERS WITH A PIPE
     """
-    return _non_alpha_num.sub('|', value)
+    return _non_alpha_num.sub("|", value)
 
 
 Date.MIN = Date(datetime(1, 1, 1, tzinfo=timezone.utc))
