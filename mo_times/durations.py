@@ -18,7 +18,7 @@ from mo_imports import delay_import
 from mo_math import MIN, is_nan, is_number, abs, floor, round
 
 Date = delay_import("mo_times.Date")
-Log = delay_import("mo_logs.Log")
+logger = delay_import("mo_logs.logger")
 
 
 class Duration(object):
@@ -47,16 +47,14 @@ class Duration(object):
         elif isinstance(value, float) and is_nan(value):
             return None
         else:
-            from mo_logs import Log
-
-            Log.error(
+            logger.error(
                 "Do not know type of object (" + get_module("mo_json").value2json(value) + ")of to make a Duration"
             )
 
     @staticmethod
     def range(start, stop, step):
         if not step:
-            Log.error("Expecting a non-zero duration for interval")
+            logger.error("Expecting a non-zero duration for interval")
         output = []
         c = start
         while c < stop:
@@ -127,9 +125,7 @@ class Duration(object):
                 else:
                     r = r - (self.month * MILLI_VALUES.month)
                     if r >= MILLI_VALUES.day * 31:
-                        from mo_logs import Log
-
-                        Log.error("Do not know how to handle")
+                        logger.error("Do not know how to handle")
                 r = MIN([29 / 30, (r + tod) / (MILLI_VALUES.day * 30)])
 
                 output = floor(m / amount.month) + r
@@ -142,7 +138,7 @@ class Duration(object):
             output.month = self.month / amount
             return output
         else:
-            Log.error("Do not know how to divide by {{type}}", type=type(amount).__name__)
+            logger.error("Do not know how to divide by {{type}}", type=type(amount).__name__)
 
     def __truediv__(self, other):
         return self.__div__(other)
@@ -193,9 +189,7 @@ class Duration(object):
 
     def floor(self, interval=None):
         if not isinstance(interval, Duration):
-            from mo_logs import Log
-
-            Log.error("Expecting an interval as a Duration object")
+            logger.error("Expecting an interval as a Duration object")
 
         output = Duration(0)
         if interval.month:
@@ -222,9 +216,7 @@ class Duration(object):
     @milli.setter
     def milli(self, value):
         if not isinstance(value, float):
-            from mo_logs import Log
-
-            Log.error("not allowed")
+            logger.error("not allowed")
         self._milli = value
 
     def total_seconds(self):
@@ -327,9 +319,7 @@ def _string2Duration(text):
     amount = int(amount) if amount else 1
 
     if interval not in MILLI_VALUES:
-        from mo_logs import Log
-
-        Log.error(
+        logger.error(
             "{{interval|quote}} in {{text|quote}} is not a recognized duration type (did you use the pural form by"
             " mistake?",
             interval=interval,
