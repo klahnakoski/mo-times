@@ -176,3 +176,9 @@ class TestDate(FuzzyTestCase):
 
     def test_single_time_digits(self):
         self.assertEqual(Date("2023-01-01 01:01:01"), Date("2023-01-01 1:1:1"))
+
+    def test_div(self):
+        self.assertEqual("day"/HOUR, 24)
+        self.assertEqual(DAY/"hour", 24)
+
+
