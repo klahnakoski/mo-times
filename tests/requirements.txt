@@ -1,2 +1,2 @@
-mo-testing
-mo-math
+mo-testing>=7.523.24033
+mo-math>=7.521.24032
