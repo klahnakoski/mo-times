@@ -12,6 +12,7 @@ from datetime import datetime
 
 from mo_math import MAX
 from mo_testing.fuzzytestcase import FuzzyTestCase, add_error_reporting
+from mo_threads import join_all_threads, Thread
 
 from mo_times.dates import Date
 from mo_times.durations import MONTH, YEAR, WEEK, Duration, DAY, HOUR
@@ -180,5 +181,16 @@ class TestDate(FuzzyTestCase):
     def test_div(self):
         self.assertEqual("day"/HOUR, 24)
         self.assertEqual(DAY/"hour", 24)
+
+
+    def test_many_decoders(self):
+
+        def parser(please_stop):
+            for i in range(50):
+                Date("3 jan 2024")
+                Date("20-01-2023")
+                Date("2024-02-16")
+
+        join_all_threads([Thread.run(str(i), parser) for i in range(100)])
 
 
