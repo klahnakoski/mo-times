@@ -9,11 +9,14 @@
 #
 
 from datetime import datetime
+from time import sleep
 
+from mo_logs import logger
 from mo_math import MAX
-from mo_testing.fuzzytestcase import FuzzyTestCase, add_error_reporting
+from mo_testing.fuzzytestcase import FuzzyTestCase, add_error_reporting, StructuredLogger_usingList
 from mo_threads import join_all_threads, Thread
 
+from mo_times import Timer
 from mo_times.dates import Date
 from mo_times.durations import MONTH, YEAR, WEEK, Duration, DAY, HOUR
 
@@ -179,12 +182,10 @@ class TestDate(FuzzyTestCase):
         self.assertEqual(Date("2023-01-01 01:01:01"), Date("2023-01-01 1:1:1"))
 
     def test_div(self):
-        self.assertEqual("day"/HOUR, 24)
-        self.assertEqual(DAY/"hour", 24)
-
+        self.assertEqual("day" / HOUR, 24)
+        self.assertEqual(DAY / "hour", 24)
 
     def test_many_decoders(self):
-
         def parser(please_stop):
             for i in range(50):
                 Date("3 jan 2024")
@@ -192,5 +193,12 @@ class TestDate(FuzzyTestCase):
                 Date("2024-02-16")
 
         join_all_threads([Thread.run(str(i), parser) for i in range(100)])
+
+    def test_dow1(self):
+        for date in Date.range(Date("2023-01-01"), Date("2023-12-31"), DAY):
+            self.assertEqual(date.dow, date.datetime.weekday())
+
+    def test_dow2(self):
+        self.assertEqual(Date("1970-01-01").dow, 3)
 
 
