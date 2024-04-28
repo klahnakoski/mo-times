@@ -200,5 +200,3 @@ class TestDate(FuzzyTestCase):
 
     def test_dow2(self):
         self.assertEqual(Date("1970-01-01").dow, 3)
-
-

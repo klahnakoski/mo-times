@@ -292,7 +292,9 @@ class Date(object):
                 output = v
         return output
 
+
 register_primitive(Date)
+
 
 def parse(*args):
     try:
