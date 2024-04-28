@@ -131,7 +131,7 @@ class Date(object):
         """
         :return: DAY-OF-WEEK  MONDAY=0, SUNDAY=6
         """
-        return int(self.unix / 60 / 60 / 24 / 7 + 5) % 7
+        return int(self.unix / 60 / 60 / 24 + 3) % 7
 
     @property
     def year(self):
