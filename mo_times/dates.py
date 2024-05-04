@@ -194,11 +194,17 @@ class Date(object):
             yield v
             v = v + interval
 
+    def to(self, timezone):
+        """
+        CONVERT TO ANOTHER TIMEZONE
+        """
+        return DateAndTimezone(self, timezone)
+
     def __str__(self):
-        return str(unix2datetime(self.unix))
+        return self.format()
 
     def __repr__(self):
-        unix2datetime(self.unix).__repr__()
+        return f"Date(\"{self.format()}\")"
 
     def __sub__(self, other):
         if other == None:
@@ -294,6 +300,21 @@ class Date(object):
 
 
 register_primitive(Date)
+
+
+class DateAndTimezone:
+    def __init__(self, date, timezone):
+        self.date = date
+
+        if isinstance(timezone, str):
+            timezone = pytz.timezone(timezone)
+        self.timezone = timezone
+
+    def format(self, format="%Y-%m-%d %H:%M:%S"):
+        return self.date.datetime.astimezone(self.timezone).strftime(format)
+
+    def year(self):
+        return self.date.datetime.astimezone(self.timezone).year
 
 
 def parse(*args):
