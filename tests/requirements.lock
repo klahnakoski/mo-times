@@ -1,11 +1,11 @@
-# Tests pass with these versions 2024-04-28
+# Tests pass with these versions 2024-05-04
 # pip install --no-deps -r tests/requirements.lock
 mo-collections==5.608.24119
-mo-dots==9.606.24115
+mo-dots==10.615.24125
 mo-future==7.584.24095
 mo-imports==7.584.24095
-mo-kwargs==7.606.24115
-mo-logs==8.608.24119
-mo-math==7.606.24115
-mo-testing==8.608.24119
-mo-threads==6.608.24119
+mo-kwargs==7.615.24125
+mo-logs==8.617.24125
+mo-math==7.616.24125
+mo-testing==8.610.24119
+mo-threads==6.610.24119
