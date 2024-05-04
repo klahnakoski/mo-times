@@ -11,6 +11,7 @@
 from datetime import datetime
 from time import sleep
 
+import pytz
 from mo_logs import logger
 from mo_math import MAX
 from mo_testing.fuzzytestcase import FuzzyTestCase, add_error_reporting, StructuredLogger_usingList
@@ -200,3 +201,14 @@ class TestDate(FuzzyTestCase):
 
     def test_dow2(self):
         self.assertEqual(Date("1970-01-01").dow, 3)
+
+    def test_repr(self):
+        self.assertEqual(repr(Date("2023-01-01")), "Date(\"2023-01-01 00:00:00\")")
+
+    def test_to_nyc_timezone(self):
+        date = Date("2023-01-01 00:00:00").to("America/New_York")
+        self.assertEqual(date.format(), "2022-12-31 19:00:00")
+
+    def test_to_nyc_timezone_using_pytz(self):
+        date = Date("2023-01-01 00:00:00").to(pytz.timezone("America/New_York"))
+        self.assertEqual(date.format(), "2022-12-31 19:00:00")
