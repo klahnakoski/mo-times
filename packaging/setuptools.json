@@ -10,14 +10,15 @@
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.11",
-        "Programming Language :: Python :: 3.12"
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13"
     ],
     "description": "More Time! Time as a vector space, the way it was meant to be.",
     "extras_require": {"tests": ["mo-testing>=8.644.24152", "mo-math>=7.632.24139", "mo-threads>=6.634.24139"]},
     "include_package_data": true,
     "install_requires": [
-         "mo-dots==10.647.24166", "mo-future==7.584.24095",   "mo-logs==8.648.24172",
-          "mo-math==7.647.24166",                   "pytz"
+         "mo-dots==10.659.25005", "mo-future==7.584.24095",   "mo-logs==8.659.25005",
+          "mo-math==7.659.25005",                   "pytz"
     ],
     "license": "MPL 2.0",
     "long_description": {
@@ -29,7 +30,7 @@
             "[![PyPI Latest Release](https://img.shields.io/pypi/v/mo-times.svg)](https://pypi.org/project/mo-times/)",
             " [![Build Status](https://github.com/klahnakoski/mo-times/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/klahnakoski/mo-times/actions/workflows/build.yml)",
             " [![Coverage Status](https://coveralls.io/repos/github/klahnakoski/mo-times/badge.svg?branch=dev)](https://coveralls.io/github/klahnakoski/mo-times?branch=dev)",
-            "[![Downloads](https://pepy.tech/badge/mo-times)](https://pepy.tech/project/mo-times)",
+            "[![Downloads](https://static.pepy.tech/badge/mo-times)](https://pepy.tech/project/mo-times)",
             "",
             "",
             "## Details ",
@@ -140,5 +141,5 @@
     "name": "mo-times",
     "packages": ["mo_times"],
     "url": "https://github.com/klahnakoski/mo-times",
-    "version": "5.648.24172"
+    "version": "5.660.25006"
 }
