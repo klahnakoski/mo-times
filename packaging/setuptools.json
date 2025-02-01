@@ -14,10 +14,10 @@
         "Programming Language :: Python :: 3.13"
     ],
     "description": "More Time! Time as a vector space, the way it was meant to be.",
-    "extras_require": {"tests": ["mo-testing>=8.648.24172", "mo-math>=7.659.25005", "mo-threads>=6.660.25006"]},
+    "extras_require": {"tests": ["mo-testing>=8.665.25029", "mo-math>=7.659.25005", "mo-threads>=6.660.25006"]},
     "include_package_data": true,
     "install_requires": [
-         "mo-dots==10.659.25005", "mo-future==7.584.24095",   "mo-logs==8.666.25032",
+         "mo-dots==10.659.25005", "mo-future==7.584.24095",   "mo-logs==8.667.25032",
           "mo-math==7.659.25005",                   "pytz"
     ],
     "license": "MPL 2.0",
@@ -141,5 +141,5 @@
     "name": "mo-times",
     "packages": ["mo_times"],
     "url": "https://github.com/klahnakoski/mo-times",
-    "version": "5.666.25032"
+    "version": "5.667.25032"
 }
