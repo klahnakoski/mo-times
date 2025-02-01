@@ -5,8 +5,8 @@ mo-dots==10.659.25005
 mo-future==7.584.24095
 mo-imports==7.584.24095
 mo-kwargs==7.659.25005
-mo-logs==8.666.25032
+mo-logs==8.667.25032
 mo-math==7.659.25005
-mo-testing==8.665.25029
+mo-testing==8.666.25032
 mo-threads==6.660.25006
 pytz==2024.1
