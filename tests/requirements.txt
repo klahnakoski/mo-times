@@ -1,3 +1,3 @@
 mo-testing>=8.667.25032
-mo-math>=7.659.25005
-mo-threads>=6.668.25032
+mo-math>=7.671.25036
+mo-threads>=6.671.25036
