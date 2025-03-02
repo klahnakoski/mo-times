@@ -20,7 +20,7 @@ Date = delay_import("mo_times.Date")
 logger = delay_import("mo_logs.logger")
 
 
-class Duration(object):
+class Duration:
     __slots__ = ["_milli", "month"]
 
     def __new__(cls, value=None, **kwargs):
@@ -135,7 +135,7 @@ class Duration(object):
             output.month = self.month / amount
             return output
         else:
-            logger.error("Do not know how to divide by {{type}}", type=type(amount).__name__)
+            logger.error("Do not know how to divide by {type}", type=type(amount).__name__)
 
     def __truediv__(self, other):
         return self.__div__(Duration(other))
