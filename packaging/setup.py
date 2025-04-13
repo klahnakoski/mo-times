@@ -6,7 +6,7 @@ setup(
     author_email='kyle@lahnakoski.com',
     classifiers=["Development Status :: 4 - Beta","Programming Language :: Python :: 3.9","Topic :: Software Development :: Libraries","Topic :: Software Development :: Libraries :: Python Modules","License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)","Programming Language :: Python :: 3.10","Programming Language :: Python :: 3.8","Programming Language :: Python :: 3.11","Programming Language :: Python :: 3.12","Programming Language :: Python :: 3.13"],
     description='More Time! Time as a vector space, the way it was meant to be.',
-    extras_require={"tests":["mo-testing>=8.674.25037","mo-math>=7.672.25036","mo-threads>=6.672.25036","pytz"]},
+    extras_require={"tests":["mo-testing>=8.674.25037","mo-math>=7.678.25061","mo-threads>=6.681.25075","pytz>=2025.2"]},
     include_package_data=True,
     install_requires=["mo-dots==10.678.25061","mo-future==7.678.25061","mo-logs==8.678.25061","mo-math==7.678.25061"],
     license='MPL 2.0',
