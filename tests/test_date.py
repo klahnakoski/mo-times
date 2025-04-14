@@ -9,15 +9,12 @@
 #
 
 from datetime import datetime
-from time import sleep
 
 import pytz
-from mo_logs import logger
 from mo_math import MAX
-from mo_testing.fuzzytestcase import FuzzyTestCase, add_error_reporting, StructuredLogger_usingList
+from mo_testing.fuzzytestcase import FuzzyTestCase, add_error_reporting
 from mo_threads import join_all_threads, Thread
 
-from mo_times import Timer
 from mo_times.dates import Date
 from mo_times.durations import MONTH, YEAR, WEEK, Duration, DAY, HOUR
 
