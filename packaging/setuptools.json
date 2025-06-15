@@ -15,13 +15,13 @@
     ],
     "description": "More Time! Time as a vector space, the way it was meant to be.",
     "extras_require": {"tests": [
-        "mo-testing>=8.674.25037",    "mo-math>=7.678.25061", "mo-threads>=6.681.25075",
+        "mo-testing>=8.674.25037",    "mo-math>=7.678.25061", "mo-threads>=6.682.25104",
                    "pytz>=2025.2"
     ]},
     "include_package_data": true,
     "install_requires": [
-         "mo-dots==10.678.25061", "mo-future==7.678.25061",   "mo-logs==8.684.25166",
-          "mo-math==7.678.25061"
+         "mo-dots==10.685.25166", "mo-future==7.685.25166",   "mo-logs==8.685.25166",
+          "mo-math==7.685.25166"
     ],
     "license": "MPL 2.0",
     "long_description": {
@@ -144,5 +144,5 @@
     "name": "mo-times",
     "packages": ["mo_times"],
     "url": "https://github.com/klahnakoski/mo-times",
-    "version": "5.684.25166"
+    "version": "5.685.25166"
 }
