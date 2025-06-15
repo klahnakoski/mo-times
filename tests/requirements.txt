@@ -1,4 +1,4 @@
 mo-testing>=8.674.25037
 mo-math>=7.678.25061
-mo-threads>=6.681.25075
+mo-threads>=6.682.25104
 pytz>=2025.2
