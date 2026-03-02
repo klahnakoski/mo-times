@@ -22,7 +22,7 @@
     ]},
     "include_package_data": true,
     "install_requires": [
-         "mo-dots==10.685.25166", "mo-future==7.685.25166",   "mo-logs==8.702.26061",
+         "mo-dots==10.685.25166", "mo-future==7.685.25166",   "mo-logs==8.703.26061",
           "mo-math==7.685.25166"
     ],
     "license": "MPL 2.0",
@@ -146,5 +146,5 @@
     "name": "mo-times",
     "packages": ["mo_times"],
     "url": "https://github.com/klahnakoski/mo-times",
-    "version": "5.702.26061"
+    "version": "5.703.26061"
 }
